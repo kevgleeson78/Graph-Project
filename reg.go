@@ -5,9 +5,14 @@ import (
 )
 
 func intoPost(infix string) string {
-	posfix := ""
+	//Mapping special characters and hiving them a priority
+	specials := map[rune]int{'*': 10, '.': 9, '|': 8}
+	//variable to return the new post fix string
+	posfix := []rune{}
+	//variable to place each character of the input string into array
+	s := []rune{}
 
-	return posfix
+	return string(posfix)
 }
 func main() {
 	//Answer ab.c*
