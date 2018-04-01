@@ -1,10 +1,7 @@
 package main
 
-import (
-	"fmt"
-)
-
-func intoPost(infix string) string {
+// IntoPost Capitol function name for exporting to nfa.go
+func IntoPost(infix string) string {
 	//Mapping special characters and hiving them a priority
 	specials := map[rune]int{'*': 10, '.': 9, '|': 8}
 	//variable to return the new post fix string
@@ -47,7 +44,8 @@ func intoPost(infix string) string {
 
 	return string(posfix)
 }
-func main() {
+
+/*
 	//Answer ab.c*.
 	fmt.Println("infix: ", "a.b.c*")
 	fmt.Println("PostFix: ", intoPost("a.b.c*"))
@@ -60,5 +58,4 @@ func main() {
 	//Answer abb.+.c.
 	fmt.Println("infix: ", "a.(b.b)+.c")
 	fmt.Println("PostFix: ", intoPost("a.(b.b)+.c"))
-
-}
+*/
