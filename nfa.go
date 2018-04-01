@@ -71,7 +71,10 @@ func addState(l []*state, s *state, a *state) []*state {
 
 func pomatch(po string, s string) bool {
 	ismatch := false
-	ponfa := posRegNfa(po)
+	//convert infix to postfix from reg.go file
+	convert := IntoPost(po)
+
+	ponfa := posRegNfa(convert)
 
 	current := []*state{}
 	next := []*state{}
@@ -97,7 +100,7 @@ func pomatch(po string, s string) bool {
 	return ismatch
 }
 func main() {
-	fmt.Println(pomatch("ab.c*|", "ccc"))
-	nfa := posRegNfa("ab.c*|")
-	fmt.Println(nfa)
+
+	fmt.Println(pomatch("a.(b|d).c*", "c"))
+
 }
