@@ -110,7 +110,7 @@ func posRegNfa(posFix string) *nfa {
 			accept := state{}
 			//New state edge1 points to Frag.initial and edge2 points to the new accept state.
 			initial := state{edge1: frag.initial, edge2: &accept}
-			//Join frag accept edge1 to frag initial state.
+			//Join frag accept edge1 to  initial state.
 			frag.accept.edge1 = &initial
 
 			//Append to nfaStack with initial and accept state above as a pointer.
@@ -158,10 +158,10 @@ func pomatch(po string, s string) bool {
 	//Variable for a matching regular expression.
 	ismatch := false
 	//convert infix to postfix from reg.go file
-	//convert := IntoPost(po)
-	//fmt.Println(convert)
+	convert := IntoPost(po)
+	fmt.Println(convert)
 	//Pass the param po from pomatch to the  posRegNfa function and Store the result into the variable ponfa.
-	ponfa := posRegNfa(po)
+	ponfa := posRegNfa(convert)
 	//New state to keep track of the current state.
 	current := []*state{}
 	//New state takes a pointer from current if an arrow is pointing from current
@@ -198,5 +198,5 @@ func main() {
 	//fmt.Println(pomatch("a.b.c*", "abccccc"))
 	//fmt.Println(pomatch("(a.(b|d))*", "adadad"))
 	//fmt.Println(pomatch("a.(b|d).c*", "ad"))
-	fmt.Println(pomatch("abb.+.c.", "abbbbbbbbc"))
+	fmt.Println(pomatch("a+.c", "c"))
 }

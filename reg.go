@@ -23,7 +23,7 @@ package main
 // IntoPost Capitol function name for exporting to nfa.go
 func IntoPost(infix string) string {
 	//Mapping special characters and giving them a priority
-	specials := map[rune]int{'*': 10, '.': 9, '|': 8}
+	specials := map[rune]int{'*': 10, '+': 9, '.': 8, '|': 7}
 	//variable to return the new post fix string
 	//Array of runes needs to be cast to string.
 	posfix := []rune{}
