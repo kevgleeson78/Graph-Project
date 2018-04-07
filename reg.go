@@ -1,6 +1,7 @@
 /*
 *App Name: Gmit-Project
 *Author:Kevin Gleeson
+*Student Number: G00353180
 *Version: 1.0
 *Resources:
 *

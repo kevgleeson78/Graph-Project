@@ -35,7 +35,7 @@ func posRegNfa(posFix string) *nfa {
 	for _, r := range posFix {
 		//switch statement for specila characters in the string
 		switch r {
-		//Concatination character
+		//Case for Concatination character
 		case '.':
 			//get the last character in the nfaStack array
 			frag2 := nfaStack[len(nfaStack)-1]
@@ -49,8 +49,9 @@ func posRegNfa(posFix string) *nfa {
 			//frag1 first edge points to frag2 initial state.
 			frag1.accept.edge1 = frag2.initial
 			//append a new pointer to nfaStack of frag1 initial state and frag2 accept state.
-			nfaStack = append(nfaStack, &nfa{initial: frag2.initial, accept: frag2.accept})
-			//Union Character
+			nfaStack = append(nfaStack, &nfa{initial: frag1.initial, accept: frag2.accept})
+
+		//Case for Union Character
 		case '|':
 			//get the last character in the nfaStack array
 			frag2 := nfaStack[len(nfaStack)-1]
@@ -60,25 +61,40 @@ func posRegNfa(posFix string) *nfa {
 			frag1 := nfaStack[len(nfaStack)-1]
 			//get everything up to the last element in the array
 			nfaStack = nfaStack[:len(nfaStack)-1]
-
+			//New state edge1 points to Frag1.initial and edge2 points to frag2.initial
 			initial := state{edge1: frag1.initial, edge2: frag2.initial}
+			//New accept state
 			accept := state{}
+			//frag1 accept and edge point to the new accept state.
 			frag1.accept.edge1 = &accept
+			//frag2 accept and edge point to the new accept state.
 			frag2.accept.edge1 = &accept
+			//Append pointer to nfaStack with initial and accept states above as pointers.
 			nfaStack = append(nfaStack, &nfa{initial: &initial, accept: &accept})
-			//Klanee star character
+
+		//Case for Klanee star character
 		case '*':
+			//get the last character in the nfaStack array
 			frag := nfaStack[len(nfaStack)-1]
+			//get everything up to the last character in the nfaStack array
 			nfaStack = nfaStack[:len(nfaStack)-1]
+			//New accept state
 			accept := state{}
+			//New state edge1 points to Frag.initial and edge2 points to teh new accept state.
 			initial := state{edge1: frag.initial, edge2: &accept}
+			//Join frag accept edge1 to frag initial state.
 			frag.accept.edge1 = frag.initial
+			//Join frag accept edge2 to new accept state.
 			frag.accept.edge2 = &accept
+			//Append pointer to nfaStack with initial and accept states above as pointers.
 			nfaStack = append(nfaStack, &nfa{initial: &initial, accept: &accept})
 		//All other characters
 		default:
+			//New accept state
 			accept := state{}
+			//New initial state with symbol from state struct and edge1 pointing to new accept state
 			initial := state{symbol: r, edge1: &accept}
+			//Append pointer to nfaStack with initial and accept states above as pointers.
 			nfaStack = append(nfaStack, &nfa{initial: &initial, accept: &accept})
 		}
 	}
@@ -90,11 +106,18 @@ func posRegNfa(posFix string) *nfa {
 	return nfaStack[0]
 }
 
+//Recursive function to add states to the nfa.
 func addState(l []*state, s *state, a *state) []*state {
+	//Append the state that has been passed in.
 	l = append(l, s)
+	//If the rune is equal to 0 there is an e arrow comming from that state.
+	//And s not equal to a.
 	if s != a && s.symbol == 0 {
+		//Keep passing l, s.edge1 and a until s.symbol !=0.
 		l = addState(l, s.edge1, a)
+		//Condition to check for non null value
 		if s.edge2 != nil {
+			//Keep Keep passing l, s.edge2 and a until s.edge2 becomes null.
 			l = addState(l, s.edge2, a)
 		}
 	}
@@ -102,38 +125,49 @@ func addState(l []*state, s *state, a *state) []*state {
 	return l
 }
 
+//Function To take in a postfix regular expression and a string.
+//This returns true if the string matches the postfix regular expression.
 func pomatch(po string, s string) bool {
+	//Variable for a matching regular expression.
 	ismatch := false
 	//convert infix to postfix from reg.go file
-	convert := IntoPost(po)
-	fmt.Println(convert)
-	ponfa := posRegNfa(convert)
-
+	//convert := IntoPost(po)
+	//fmt.Println(convert)
+	//Pass the param po from pomatch to the  posRegNfa function and Store the result into the variable ponfa.
+	ponfa := posRegNfa(po)
+	//New state to keep track of the current state.
 	current := []*state{}
+	//New state takes a pointer from current if an arrow is pointing from current
 	next := []*state{}
-
+	//Assign current to a function that has current, ponfa accept and initial states.
 	current = addState(current[:], ponfa.initial, ponfa.accept)
-
+	//loop over each rune in String s
 	for _, r := range s {
+		//For each rune in Strings loop over the current array
 		for _, c := range current {
+			//Condition to check if the rune in current is equal to the rune in the input String s.
 			if c.symbol == r {
+				//Assign next to addState function that has next, edge1 for current and ponfa accept.
 				next = addState(next[:], c.edge1, ponfa.accept)
 			}
 		}
+		//Clear the next array and copy the current array to the new empty next array
 		current, next = next, []*state{}
 	}
-
+	// Loop to go over the current array
 	for _, c := range current {
+		//Condition if c in loop == ponfa accept state
 		if c == ponfa.accept {
+			//Assign ismatch to true.
 			ismatch = true
 			break
 		}
 	}
-
+	//Return true or false depending on whether the regular expression matches the string.
 	return ismatch
 }
 func main() {
 
-	fmt.Println(pomatch("ab.c", "c"))
+	fmt.Println(pomatch("ab.c*|", "cccccc"))
 
 }
