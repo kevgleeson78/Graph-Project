@@ -1,9 +1,18 @@
+/*
+*App Name: Gmit-Project
+*Author:Kevin Gleeson
+*Version: 1.0
+*Resources:
+*
+ */
+
 package main
 
 import (
 	"fmt"
 )
 
+//Struct that holds rune characters, and two pointers
 type state struct {
 	symbol rune
 	edge1  *state
@@ -73,7 +82,7 @@ func pomatch(po string, s string) bool {
 	ismatch := false
 	//convert infix to postfix from reg.go file
 	convert := IntoPost(po)
-
+	fmt.Println(convert)
 	ponfa := posRegNfa(convert)
 
 	current := []*state{}
@@ -101,6 +110,6 @@ func pomatch(po string, s string) bool {
 }
 func main() {
 
-	fmt.Println(pomatch("a.(b|d).c*", "c"))
+	fmt.Println(pomatch("a.(b|d).c*", "cccccccc"))
 
 }

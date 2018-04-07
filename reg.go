@@ -1,3 +1,11 @@
+/*
+*App Name: Gmit-Project
+*Author:Kevin Gleeson
+*Version: 1.0
+*Resources:
+*
+ */
+
 package main
 
 // IntoPost Capitol function name for exporting to nfa.go
