@@ -194,9 +194,17 @@ func pomatch(po string, s string) bool {
 	return ismatch
 }
 func main() {
-
+	//fmt.Println(pomatch("a.(b.b)+.c", "abbc"))
 	//fmt.Println(pomatch("a.b.c*", "abccccc"))
 	//fmt.Println(pomatch("(a.(b|d))*", "adadad"))
 	//fmt.Println(pomatch("a.(b|d).c*", "ad"))
-	fmt.Println(pomatch("a+.c", "c"))
+	fmt.Print("Enter First String: ")
+	var infix string
+	fmt.Scanln(&infix)
+	fmt.Print("Enter Second String: ")
+	var match string
+	fmt.Scanln(&match)
+
+	fmt.Println(pomatch(infix, match))
+
 }
