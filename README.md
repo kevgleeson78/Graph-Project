@@ -41,5 +41,5 @@ Type the following command
 ## The purpose of this applictaion
 The purpose of this program is to take an infix regular expression and transform it to postfix notation.
 From there using Thompsons construction the regular expression is split up to accept and initial states one characte at a time.
-The characters '.' to concat, '|' to or , '*' for Klanee and '+' for one or more are used.
+The characters '.' to concat, '|' to or , '*' for Klanee(0 or more) and '+' for one or more are used.
 
