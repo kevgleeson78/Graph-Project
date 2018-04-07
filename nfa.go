@@ -14,15 +14,19 @@ import (
 
 //Struct that holds rune characters, and two pointers
 type state struct {
+	//rune used to represent arrows pointing to either edge1 or edge2 or both states
 	symbol rune
 	edge1  *state
 	edge2  *state
 }
+
+//Struct to hold the fragment of each state and keep track of which state is in the initial or accepted state.
 type nfa struct {
 	initial *state
 	accept  *state
 }
 
+//Function to take in a postfix string as a param and return a pointer to nfa struct
 func posRegNfa(posFix string) *nfa {
 	nfaStack := []*nfa{}
 	for _, r := range posFix {
@@ -110,6 +114,6 @@ func pomatch(po string, s string) bool {
 }
 func main() {
 
-	fmt.Println(pomatch("a.(b|d).c*", "cccccccc"))
+	fmt.Println(pomatch("ab.c", "c"))
 
 }
