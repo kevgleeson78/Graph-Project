@@ -4,6 +4,16 @@
 *Student Number: G00353180
 *Version: 1.0
 *Resources:
+*https://web.microsoftstream.com/video/9d83a3f3-bc4f-4bda-95cc-b21c8e67675e
+*https://web.microsoftstream.com/video/96e6f4cc-b390-4531-ba7f-84ad6ab01f47
+*https://web.microsoftstream.com/video/d08f6a02-23ec-4fa1-a781-585f1fd8c69e
+*https://web.microsoftstream.com/video/946a7826-e536-4295-b050-857975162e6c
+*https://web.microsoftstream.com/video/68a288f5-4688-4b3a-980e-1fcd5dd2a53b
+*https://web.microsoftstream.com/video/bad665ee-3417-4350-9d31-6db35cf5f80d
+*https://regex101.com/r/xvnqoo/1/
+*https://en.wikipedia.org/wiki/Shunting-yard_algorithm
+*https://en.wikipedia.org/wiki/Thompson%27s_construction
+*http://codeidol.com/community/perl/know-the-precedence-of-regular-expression-operator/14215/
 *
  */
 
@@ -131,10 +141,10 @@ func pomatch(po string, s string) bool {
 	//Variable for a matching regular expression.
 	ismatch := false
 	//convert infix to postfix from reg.go file
-	//convert := IntoPost(po)
-	//fmt.Println(convert)
+	convert := IntoPost(po)
+	fmt.Println(convert)
 	//Pass the param po from pomatch to the  posRegNfa function and Store the result into the variable ponfa.
-	ponfa := posRegNfa(po)
+	ponfa := posRegNfa(convert)
 	//New state to keep track of the current state.
 	current := []*state{}
 	//New state takes a pointer from current if an arrow is pointing from current
@@ -168,6 +178,8 @@ func pomatch(po string, s string) bool {
 }
 func main() {
 
-	fmt.Println(pomatch("ab.c*.*", "ababababccccc"))
+	fmt.Println(pomatch("a.b.c*", "abccccc"))
+	fmt.Println(pomatch("(a.(b|d))*", "adadad"))
+	fmt.Println(pomatch("a.(b|d).c*", "ad"))
 
 }

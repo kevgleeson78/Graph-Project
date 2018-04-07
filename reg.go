@@ -4,6 +4,17 @@
 *Student Number: G00353180
 *Version: 1.0
 *Resources:
+*https://web.microsoftstream.com/video/9d83a3f3-bc4f-4bda-95cc-b21c8e67675e
+*https://web.microsoftstream.com/video/96e6f4cc-b390-4531-ba7f-84ad6ab01f47
+*https://web.microsoftstream.com/video/d08f6a02-23ec-4fa1-a781-585f1fd8c69e
+*https://web.microsoftstream.com/video/946a7826-e536-4295-b050-857975162e6c
+*https://web.microsoftstream.com/video/68a288f5-4688-4b3a-980e-1fcd5dd2a53b
+*https://web.microsoftstream.com/video/bad665ee-3417-4350-9d31-6db35cf5f80d
+*https://regex101.com/r/xvnqoo/1/
+*https://en.wikipedia.org/wiki/Shunting-yard_algorithm
+*https://en.wikipedia.org/wiki/Thompson%27s_construction
+*http://codeidol.com/community/perl/know-the-precedence-of-regular-expression-operator/14215/
+*
 *
  */
 
@@ -65,13 +76,15 @@ func IntoPost(infix string) string {
 	fmt.Println("infix: ", "a.b.c*")
 	fmt.Println("PostFix: ", intoPost("a.b.c*"))
 
-	//Answer abd|.* => ()
+	//Answer abd|.* => ('a' followed by  'b' or 'a' followed by  'b' 0 or more times)
 	fmt.Println("infix: ", "(a.(b|d))*")
 	fmt.Println("PostFix: ", intoPost("(a.(b|d))*"))
-	//Answer abd|.c*.
+
+	//Answer abd|.c*. => ('a' followed by 'b' or 'a' followed by 'd' followed by 'c' 0 or more times)
 	fmt.Println("infix: ", "a.(b|d).c*")
 	fmt.Println("PostFix: ", intoPost("a.(b|d).c*"))
-	//Answer abb.+.c.
+
+	//Answer abb.+.c. => ('a' followed by one or more 'bb' followed by 'c' )
 	fmt.Println("infix: ", "a.(b.b)+.c")
 	fmt.Println("PostFix: ", intoPost("a.(b.b)+.c"))
 */
