@@ -43,3 +43,11 @@ The purpose of this program is to take an infix regular expression and transform
 From there using Thompsons construction the regular expression is split up to accept and initial states one characte at a time.
 The characters '.' to concat, '|' to or , '*' for Klanee(0 or more) and '+' for one or more are used.
 
+## Shunting yard algorithm.
+The shunting yard algorithm is used to transform the infix regular expression to postfix.
+```GO
+//Mapping special characters and giving them a priority
+	specials := map[rune]int{'*': 10, '+': 9, '.': 8, '|': 7}
+ ```
+
+
