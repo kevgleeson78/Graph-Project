@@ -49,5 +49,40 @@ The shunting yard algorithm is used to transform the infix regular expression to
 //Mapping special characters and giving them a priority
 	specials := map[rune]int{'*': 10, '+': 9, '.': 8, '|': 7}
  ```
+A map of runes with priorities attached are used for shifting over the characters by precedence.
 
+```GO
+for _, r := range infix {
+		switch {
+		//if the array has an open bracket
+		case r == '(':
+			//put that rune into the array s
+			s = append(s, r)
+			//if the rune is a close bracket
+		case r == ')':
+			//for loop to run until the character ( is found
+			for s[len(s)-1] != '(' {
+				//append each rune to the end of the array posfix
+				posfix = append(posfix, s[len(s)-1])
+				//select and store in s everything apart from the last rune in the array s.
+				s = s[:len(s)-1]
+			}
+			//remove open bracket by gettint everything in s array apart from the last character.
+			s = s[:len(s)-1]
+			//case for mapped runes greater than 0. 0 in runes are equal to null.
+		case specials[r] > 0:
+			//loop while s greater than 0 and the value of the special rune is less than the value of the character of the top of the stack.
+			for len(s) > 0 && specials[r] <= specials[s[len(s)-1]] {
+				//append each rune to the end of the array posfix
+				posfix = append(posfix, s[len(s)-1])
+				//select and store in s everything apart from the last rune in the array s.
+				s = s[:len(s)-1]
+			}
+			//Append s from stack to s
+			s = append(s, r)
+		default:
+			posfix = append(posfix, r)
+		}
+	}
+```
 
