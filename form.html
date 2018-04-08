@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+<div>
+  <form id="contactForm"  method="POST" action="/">     
+      <label>Infix Expression</label><input name="infix" type="text" value="" />
+      <label>String to match</label><input name="match" type="text" value="" />
+      <button type="submit">Send</button>
+  </form>
+</div>
+<h1 id="contactResponse"></h1>
+<script>
+
+  //adapted from https://stackoverflow.com/questions/18171017
+    $("#contactForm").submit(function(event) 
+    {
+        /* stop form from submitting normally */
+        event.preventDefault();
+
+        /* get some values from elements on the page: */
+        var $form = $( this ),
+            $submit = $form.find( 'button[type="submit"]' ),
+            infix_value = $form.find( 'input[name="infix"]' ).val(),
+            match_value = $form.find( 'input[name="match"]' ).val(),
+           
+            url = $form.attr('action');
+
+        /* Send the data using post */
+        var posting = $.post( url, { 
+                          infix: infix_value, 
+                          match: match_value, 
+                          
+                      });
+
+        posting.done(function( data )
+        {
+            /* Put the results in a div */
+            $( "#contactResponse" ).html(data);
+
+            
+            
+        });
+   });
+</script>
+</body>
+
+</html>

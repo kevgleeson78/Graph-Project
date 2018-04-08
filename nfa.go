@@ -21,6 +21,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 )
 
 //Struct that holds rune characters, and two pointers
@@ -193,18 +195,56 @@ func pomatch(po string, s string) bool {
 	//Return true or false depending on whether the regular expression matches the string.
 	return ismatch
 }
+func hello(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	if r.URL.Path != "/" {
+		http.Error(w, "404 not found.", http.StatusNotFound)
+		return
+	}
+
+	switch r.Method {
+	case "GET":
+		http.ServeFile(w, r, "form.html")
+	case "POST":
+		// Call ParseForm() to parse the raw query and update r.PostForm and r.Form.
+		if err := r.ParseForm(); err != nil {
+			fmt.Fprintf(w, "ParseForm() err: %v", err)
+			return
+		}
+
+		infix := r.FormValue("infix")
+		match := r.FormValue("match")
+		fmt.Fprintf(w, "Infix:=%s\n ", infix)
+		fmt.Fprintf(w, "Postfix:= %s\n", IntoPost(infix))
+		fmt.Fprintf(w, "Test String:= %s\n", match)
+		fmt.Fprintf(w, "Value:= %t\n", pomatch(infix, match))
+	default:
+		fmt.Fprintf(w, "Sorry, only GET and POST methods are supported.")
+	}
+}
+
 func main() {
+	http.HandleFunc("/", hello)
+
+	fmt.Printf("Starting server for testing HTTP POST...\n")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
+}
+
+/*func main() {
 	//fmt.Println(pomatch("a.(b.b)+.c", "abbc"))
 	//fmt.Println(pomatch("a.b.c*", "abccccc"))
 	//fmt.Println(pomatch("(a.(b|d))*", "adadad"))
 	//fmt.Println(pomatch("a.(b|d).c*", "ad"))
-	fmt.Print("Enter First String: ")
+	fmt.Print("Enter Infix String: ")
 	var infix string
 	fmt.Scanln(&infix)
-	fmt.Print("Enter Second String: ")
+	fmt.Print("Enter String to match: ")
 	var match string
 	fmt.Scanln(&match)
 
 	fmt.Println(pomatch(infix, match))
 
 }
+*/
