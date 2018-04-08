@@ -32,11 +32,13 @@ Type the following command
 ```bash
 >./Graph-Project
 ```
-6: This will run the application to the terminal window.
+6: This will run the server on port 8080. 
 
-7: Enter a Infix notation regular expression on the first prompt.
+7: navigate to http://localhost:8080 in your web browser.
 
-8: Enter the string you want to match.
+7: Enter a Infix notation regular expression on the first text field.
+
+8: Enter the string you want to match in the second text field and press enter.
 
 ## The purpose of this applictaion
 The purpose of this program is to take an infix regular expression and transform it to postfix notation.
