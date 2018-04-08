@@ -36,9 +36,9 @@ Type the following command
 
 7: navigate to http://localhost:8080 in your web browser.
 
-7: Enter a Infix notation regular expression on the first text field.
+8: Enter a Infix notation regular expression on the first text field.
 
-8: Enter the string you want to match in the second text field and press enter.
+9: Enter the string you want to match in the second text field and press enter.
 
 ## The purpose of this applictaion
 The purpose of this program is to take an infix regular expression and transform it to postfix notation.
